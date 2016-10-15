@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<link rel="stylesheet" type="text/css" href="/static/ville_style.css"/>
+</head>
+<body>
+	<form id="letter_form" action="." method="POST" onsubmit="return validateMessage()">
+		<h1>Have something to say?<br>Tell your governor:</h1>
+
+		<input type="text" id="user_name" onfocus="if(this.value == 'enter your full name'){ this.value = ''; }" onblur="if(this.value == '') { this.value = 'enter your full name';}" name="from_name" value="enter your full name" required><br>
+
+		<h2>enter your address:</h2>
+
+		<input type="text" onfocus="if(this.value == 'address line 1'){ this.value = ''; }" onblur="if(this.value == '') { this.value = 'address line 1';}" name="from_address_1" value="address line 1"required><br>
+
+		<input type="text" 	onfocus="if(this.value == 'address line 2'){ this.value = ''; }" onblur="if(this.value == '') { this.value = 'address line 2';}" name="from_address_2" value="address line 2"><br>
+		
+		<input type="text" onfocus="if(this.value == 'city'){ this.value = ''; }" onblur="if(this.value == '') { this.value = 'city';}" name="from_city" value="city"required><br>
+
+		<input type="text" 	onfocus="if(this.value == 'state abbreviation'){ this.value = ''; }" onblur="if(this.value == '') { this.value = 'state abbreviation';}" name="from_state" value="state abbreviation" required><br>
+
+		<input type="text" onfocus="if(this.value == 'zip'){ this.value = ''; }" onblur="if(this.value == '') { this.value = 'zip';}" name="from_zip" value="zip" required><br>
+
+		<textarea form="letter_form" id="textarea_words" onfocus="if(this.value == 'type your letter here'){ this.value = ''; }" onblur="if(this.value == '') { this.value = 'type your letter here';}" name="letter_content" required>type your letter here</textarea><br>
+
+		<input type="submit" name="get_dat_letter" value="get letter">
+	</form>
+
+	<script>
+	function wordCount(str) { 
+  		return str.split(" ").length
+	}
+	//Check that the necessary inputs were entered
+	function validateMessage() {
+		//Address line 2 not necessary, changes to " " if left empty
+		var check_addr_2 = document.getElementsByName('from_address_2').value;
+		if (check_addr_2 == '' || check_addr_2 == 'address line 2' || check_addr_2 == null) {
+			document.forms['letter_form'].elements["from_address_2"].value = " ";
+		}
+		//Make sure letter content is under 200 words
+		var check_letter_content = document.getElementById('textarea_words').value
+		var count = wordCount(check_letter_content)
+		if (count > 200) {
+			alert("Eh, too wordy. Limit your " + count + " words to under 200")
+			return false
+		}
+		var check_name = document.getElementsByName('from_name').value
+		if (check_name == '' || check_name == 'enter your full name') {
+			alert("Don't forget your name!")
+			return false
+		}
+		var check_addr_1 = document.getElementsByName('from_address_1').value
+		if (check_addr_1 == '' || check_addr_1 == 'address line 1') {
+			alert("Oops! Looks like you forgot your address")
+			return false
+		}
+		var check_city = document.getElementsByName('from_city').value
+		if (check_city == '' || check_city == 'city') {
+			alert("Okay... but what city are you from?")
+			return false
+		}
+		var check_state = document.getElementsByName('from_state').value
+		if (check_state == '' || check_state == "state abbreviation") {
+			alert("Hmm try state again, make sure you use the abbreviation")
+			return false
+		}
+		var check_zip = document.getElementsByName('from_zip').value
+		if (check_zip == '' || check_zip == 'zip') {
+			alert("Nope, check your zip code")
+			return false
+		}
+		if (check_letter_content == '' || check_letter_content == 'type your letter here') {
+			alert("Where's your letter content?? What are you going to tell your governor??")
+			return false
+		}
+		return true
+	}
+	</script>
+</body>
+</html>
